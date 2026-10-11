@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rizal Quiz: Chapters 1-2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F5F9;--card:#fff;--ink:#16223B;--mute:#5A6479;--line:#D5DAE4;--red:#C21F3A;--ok:#1F7A4D;--okbg:#E2F3EA;--badbg:#FBE4E8;--gold:#E0A526;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F172A;--card:#18233D;--ink:#EEF1F7;--mute:#9AA6BF;--line:#2C3A5B;--red:#F0627A;--ok:#5FD39A;--okbg:#143A2B;--badbg:#44202A}}
+:root[data-theme="dark"]{--bg:#0F172A;--card:#18233D;--ink:#EEF1F7;--mute:#9AA6BF;--line:#2C3A5B;--red:#F0627A;--ok:#5FD39A;--okbg:#143A2B;--badbg:#44202A}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font:700 26px/1.25 "Libre Baskerville",Georgia,serif;margin:8px 0 6px}
+.sub{color:var(--mute);margin:0 0 20px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--mute);font-size:14px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.q{font:700 19px/1.4 "Libre Baskerville",Georgia,serif;margin:0 0 16px}
+.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:0 0 10px;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:8px;font:inherit;cursor:pointer}
+.opt:hover:enabled{border-color:var(--red)}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.fb{margin:14px 0 0;padding:12px 14px;border-left:4px solid var(--ok);background:var(--okbg);border-radius:4px}
+.fb.bad{border-color:var(--red);background:var(--badbg)}
+.fb b{display:block;margin-bottom:2px}
+.btn{margin-top:16px;padding:12px 22px;background:var(--red);color:#fff;border:0;border-radius:8px;font:600 16px system-ui,sans-serif;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line);margin-left:8px}
+.score{font:700 52px/1 "Libre Baskerville",Georgia,serif;margin:4px 0 8px}
+.rev{margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:8px}
+.rev p{margin:2px 0}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Rizal Quiz: Chapters 1 and 2</h1>
+<p class="sub">Rizal Law and the 19th century. Tap an answer to check it right away.</p>
+<div id="app"></div>
+</main>
+<script>
+const Q=[
+{q:"Who was the main proponent of the Rizal Bill?",o:["Jose P. Laurel","Claro M. Recto","Fidel V. Ramos","Carlos Maria de la Torre"],a:1,e:"Sen. Claro M. Recto pushed the bill despite being called communist and anti-Catholic."},
+{q:"On what date was the Rizal Law (RA 1425) enacted?",o:["December 30, 1956","June 19, 1956","June 12, 1956","June 12, 1896"],a:2,e:"It was enacted on June 12, 1956, which is Flag Day."},
+{q:"What did the compromise clause of the Rizal Law allow?",o:["Skipping the course entirely","Reading only abridged novels","Exemption for students whose faith would be harmed","Teaching Rizal only in college"],a:2,e:"Students who believed the novels would harm their faith could be exempted."},
+{q:"What does RA 229 ban on December 30 (Rizal Day)?",o:["Public speeches","Cockfighting, horse racing, and jai-alai","All trading","Fishing"],a:1,e:"RA 229 bans cockfighting, horse racing, and jai-alai on Rizal Day."},
+{q:"Who was Rizal's first love?",o:["Josephine Bracken","Leonor Rivera","Segunda Katigbak","Nellie Boustead"],a:2,e:"The slides name Segunda Katigbak as his first love."},
+{q:"Why did the Manila-Acapulco Galleon Trade end in 1815?",o:["Suez Canal opened","Mexico's war of independence","The Cadiz Constitution","Chinese massacres"],a:1,e:"The trade ended on September 14, 1815 because of Mexico's war of independence."},
+{q:"When was the Suez Canal officially opened?",o:["November 17, 1869","September 14, 1815","June 12, 1956","1882"],a:0,e:"It opened on November 17, 1869 after being built from 1859 to 1869."},
+{q:"How long did Barcelona to Manila take after the Suez Canal opened?",o:["Over 3 months","About 1 year","32 to 40 days","About 1 week"],a:2,e:"Travel dropped from over 3 months to about 32 to 40 days."},
+{q:"Which were the major Philippine export crops in the 19th century?",o:["Rice, corn, wheat, cotton","Sugar, abaca, coffee, tobacco","Pineapple, mango, guava, papaya","Tea, silk, spices, rubber"],a:1,e:"Sugar, Manila hemp (abaca), coffee, and tobacco became major exports."},
+{q:"Who established the tobacco monopoly in 1782?",o:["Carlos Maria de la Torre","Manuel Gonzalez Aguilar","Jose Basco","Ferdinand de Lesseps"],a:2,e:"Governor General Jose Basco set it up to increase government revenue. It was abolished in 1882."},
+{q:"What is the correct hacienda hierarchy?",o:["Owner, inquilino, administrator, sharecropper","Owner, administrator, inquilino, sharecropper","Administrator, owner, sharecropper, inquilino","Inquilino, owner, administrator, sharecropper"],a:1,e:"Estate owner, then administrator, then inquilino, then tenant-sharecropper (kasama)."},
+{q:"Who suffered the most abuses in the hacienda system?",o:["Estate owners","Administrators","Inquilinos","Sharecroppers"],a:3,e:"Sharecroppers faced excessive taxes, unfair crop division, and labor demands."},
+{q:"Which governor-general (1869-1871) abolished censorship and was called the most beloved Spanish governor?",o:["Jose Basco","Carlos Maria de la Torre","Manuel Gonzalez Aguilar","Ferdinand VII"],a:1,e:"De la Torre was liberal and democratic, promoted free speech and press, and settled the Cavite agrarian problem peacefully."},
+{q:"What made the Cadiz Constitution (1812) unique among European constitutions?",o:["It created a republic","It abolished the church","It declared sovereignty comes from the people, not the king","It ended the galleon trade"],a:2,e:"It was the first European constitution to declare national sovereignty derived from the people."},
+{q:"Who annulled the Cadiz Constitution in 1814?",o:["Charles III","Philip V","Ferdinand VII","Charles IV"],a:2,e:"King Ferdinand VII annulled it, but its ideas of equality, liberty, and suffrage remained."},
+{q:"What is sociological imagination?",o:["Writing fiction about society","Seeing personal life in relation to larger historical and social forces","Memorizing historical dates","Planning social events"],a:1,e:"Rizal had it: he understood the societal forces shaping his life and responded in ways that benefited others."}
+];
+const app=document.getElementById('app');
+let i=0,score=0,missed=[],order=[];
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function start(){i=0;score=0;missed=[];order=shuffle(Q.map((_,k)=>k));show()}
+function show(){
+ const item=Q[order[i]];
+ const idx=shuffle(item.o.map((_,k)=>k));
+ app.innerHTML=`<div class="bar"><i style="width:${i/Q.length*100}%"></i></div>
+ <div class="meta"><span>Question ${i+1} of ${Q.length}</span><span>Score: ${score}</span></div>
+ <div class="card"><p class="q"></p><div id="opts"></div><div id="fb"></div><div id="nx"></div></div>`;
+ app.querySelector('.q').textContent=item.q;
+ const box=document.getElementById('opts');
+ idx.forEach(k=>{const b=document.createElement('button');b.className='opt';b.textContent=item.o[k];b.onclick=()=>answer(k,b,item,box);box.appendChild(b)});
+}
+function answer(k,btn,item,box){
+ const ok=k===item.a;
+ [...box.children].forEach(b=>{b.disabled=true;if(b.textContent===item.o[item.a])b.classList.add('right')});
+ if(ok){score++}else{btn.classList.add('wrong');missed.push({q:item.q,mine:item.o[k],right:item.o[item.a],e:item.e})}
+ const fb=document.getElementById('fb');
+ fb.innerHTML=`<div class="fb ${ok?'':'bad'}"><b>${ok?'Correct.':'Not quite.'}</b><span></span></div>`;
+ fb.querySelector('span').textContent=(ok?'':'Answer: '+item.o[item.a]+'. ')+item.e;
+ const last=i===Q.length-1;
+ const n=document.createElement('button');n.className='btn';n.textContent=last?'See results':'Next question';
+ n.onclick=()=>{i++;last?done():show()};
+ document.getElementById('nx').appendChild(n);n.focus();
+}
+function done(){
+ const pct=Math.round(score/Q.length*100);
+ const msg=pct>=90?'Excellent. You are ready.':pct>=70?'Solid. Review the misses below.':'Keep going. Review the misses and try again.';
+ app.innerHTML=`<div class="bar"><i style="width:100%"></i></div><div class="card"><p class="sub" style="margin:0">Your score</p><div class="score">${score} / ${Q.length}</div><p style="margin:0 0 4px"><b>${pct}%</b>. ${msg}</p><div id="rv"></div><button class="btn" id="again">Try again</button></div>`;
+ const rv=document.getElementById('rv');
+ if(missed.length){const h=document.createElement('p');h.innerHTML='<b>Review these:</b>';h.style.margin='16px 0 0';rv.appendChild(h)}
+ missed.forEach(m=>{const d=document.createElement('div');d.className='rev';
+  [['b',m.q],['p','You chose: '+m.mine],['p','Correct: '+m.right],['p',m.e]].forEach(([t,x])=>{const p=document.createElement(t==='b'?'p':'p');if(t==='b')p.style.fontWeight='700';p.textContent=x;d.appendChild(p)});
+  rv.appendChild(d)});
+ document.getElementById('again').onclick=start;
+}
+start();
+</script>
+</body>
+</html>
